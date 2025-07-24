@@ -1,0 +1,6 @@
+FROM python:3.12
+COPY ../src /app
+RUN pip install -e /app/watch_party
+VOLUME /app/config
+WORKDIR /app
+CMD ["python", "/app/watch_party/cmd/run.py"]

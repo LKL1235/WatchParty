@@ -1,0 +1,84 @@
+{% extends "base.html" %}
+
+{% block title %}用户: {{ username }} - Flask 应用{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h2>用户信息</h2>
+            </div>
+            <div class="card-body">
+                <h4>欢迎, {{ username }}!</h4>
+                <p class="text-muted">这是一个动态用户页面的示例。</p>
+
+                <div class="row mt-4">
+                    <div class="col-md-6">
+                        <h6>用户名:</h6>
+                        <p class="lead">{{ username }}</p>
+                    </div>
+                    <div class="col-md-6">
+                        <h6>页面类型:</h6>
+                        <p class="lead">动态路由页面</p>
+                    </div>
+                </div>
+
+                <hr>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                    <a href="{{ url_for('index') }}" class="btn btn-secondary">返回首页</a>
+                    <button class="btn btn-primary" onclick="loadUserData()">加载用户数据</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 用户数据显示区域 -->
+<div id="user-data" class="mt-4" style="display: none;">
+    <div class="col-md-8 mx-auto">
+        <div class="card">
+            <div class="card-header">
+                <h5>模拟用户数据</h5>
+            </div>
+            <div class="card-body">
+                <div id="data-content">
+                    <!-- 动态加载的内容 -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    function loadUserData() {
+        // 模拟API调用
+        const userData = {
+            username: "{{ username }}",
+            email: "{{ username }}@example.com",
+            joinDate: new Date().toLocaleDateString('zh-CN'),
+            lastLogin: new Date().toLocaleString('zh-CN'),
+            status: "活跃用户"
+        };
+
+        const dataHtml = `
+        <table class="table table-striped">
+            <tr><th>用户名</th><td>${userData.username}</td></tr>
+            <tr><th>邮箱</th><td>${userData.email}</td></tr>
+            <tr><th>加入日期</th><td>${userData.joinDate}</td></tr>
+            <tr><th>最后登录</th><td>${userData.lastLogin}</td></tr>
+            <tr><th>状态</th><td><span class="badge bg-success">${userData.status}</span></td></tr>
+        </table>
+    `;
+
+        document.getElementById('data-content').innerHTML = dataHtml;
+        document.getElementById('user-data').style.display = 'block';
+
+        // 滚动到数据区域
+        document.getElementById('user-data').scrollIntoView({ behavior: 'smooth' });
+    }
+</script>
+{% endblock %}

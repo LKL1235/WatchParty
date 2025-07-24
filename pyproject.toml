@@ -1,0 +1,83 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "watch-party"
+version = "0.1.0"
+description = "A Python project for video processing and manipulation"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "LKL1235", email = "hood1235@foxmail.com"}
+]
+maintainers = [
+    {name = "LKL1235", email = "hood1235@foxmail.com"}
+]
+keywords = ["video"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.9"
+
+dependencies = [
+    "flask>=2.3.0",
+    "flask-cors>=4.0.0",
+    "pydantic>=2.0.0",
+    "pyyaml>=6.0.0",
+    "waitress>=3.0.0",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "isort>=5.12.0",
+    "pre-commit>=3.0.0",
+]
+
+advanced = [
+    "ffmpeg-python>=0.2.0",
+]
+
+all = ["watch-party[dev,advanced]"]
+
+[project.scripts]
+watch-party = "watch_party.cmd.run:main"
+
+
+[tool.setuptools.packages.find]
+where = ["src"]
+include = ["watch_party*"]
+exclude = [
+    "*.egg-info",
+    "__pycache__",
+]
+
+
+[tool.setuptools.package-dir]
+"" = "src"
+
+
+# isort import sorter
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 120
+known_first_party = ["watch_party"]
+
+# Pytest configuration
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py", "*_test.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]

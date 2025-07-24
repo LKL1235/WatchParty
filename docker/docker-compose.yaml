@@ -1,0 +1,25 @@
+version: '3.8'
+services:
+  watch-party:
+    build:
+      context: ../
+      dockerfile: docker/dockerfile
+    ports:
+      - "5999:5999"
+    volumes:
+      - ./config/watch_party:/app/config
+    command: python /app/watch_party/cmd/run.py
+
+  postgres:
+    image: postgres:14.18
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=watch_party
+    volumes:
+      - ./postgres:/var/lib/postgresql/data
+    volumes:
+      - ./config/postgres/postgresql.conf:/etc/postgresql/postgresql.conf
+    restart: always

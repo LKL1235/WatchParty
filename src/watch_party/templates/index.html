@@ -1,0 +1,95 @@
+{% extends "base.html" %}
+
+{% block title %}首页 - Flask 应用{% endblock %}
+
+{% block content %}
+<div class="row">
+    <div class="col-md-8 mx-auto">
+        <div class="jumbotron bg-light p-5 rounded">
+            <h1 class="display-4">欢迎使用 Flask 应用！</h1>
+            <p class="lead">这是一个基础的Flask项目模板，包含了常用的功能和现代化的界面设计。</p>
+            <hr class="my-4">
+            <p>您可以在这里开始构建您的Web应用程序。</p>
+            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="testApi()">测试 API</a>
+        </div>
+    </div>
+</div>
+
+<div class="row mt-4">
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">功能特性</h5>
+                <p class="card-text">
+                <ul>
+                    <li>响应式设计</li>
+                    <li>RESTful API</li>
+                    <li>错误处理</li>
+                    <li>静态文件服务</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">技术栈</h5>
+                <p class="card-text">
+                <ul>
+                    <li>Flask 2.3+</li>
+                    <li>Bootstrap 5</li>
+                    <li>Jinja2 模板</li>
+                    <li>Flask-CORS</li>
+                </ul>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">快速开始</h5>
+                <p class="card-text">
+                <ol>
+                    <li>安装依赖</li>
+                    <li>运行应用</li>
+                    <li>访问 localhost:5000</li>
+                    <li>开始开发</li>
+                </ol>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- API测试结果显示区域 -->
+<div id="api-result" class="mt-4" style="display: none;">
+    <div class="alert alert-info">
+        <h6>API 响应：</h6>
+        <pre id="api-response"></pre>
+    </div>
+</div>
+{% endblock %}
+
+{% block scripts %}
+<script>
+    async function testApi() {
+        try {
+            const response = await fetch('/api/hello');
+            const data = await response.json();
+
+            document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
+            document.getElementById('api-result').style.display = 'block';
+
+            // 滚动到结果区域
+            document.getElementById('api-result').scrollIntoView({ behavior: 'smooth' });
+        } catch (error) {
+            document.getElementById('api-response').textContent = '错误: ' + error.message;
+            document.getElementById('api-result').style.display = 'block';
+        }
+    }
+</script>
+{% endblock %}

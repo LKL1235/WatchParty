@@ -1,0 +1,57 @@
+{
+    "python.analysis.extraPaths": [
+        "./src"
+    ],
+    "python.analysis.typeCheckingMode": "strict",
+    "python.analysis.diagnosticSeverityOverrides": {
+        "reportGeneralTypeIssues": "warning",  // 常规类型不一致, 不支持的操作
+        "reportMissingImports": "warning",      // 导入失败
+        "reportCallIssue": "warning",      // 函数调用问题, 比如参数类型不兼容     全是join函数报错
+        "reportOptionalIterable": "warning",      // 对可能为None的变量进行迭代
+        "reportOptionalContextManager": "warning",      // 对可能为None的变量进行上下文管理
+        "reportOperatorIssue": "warning",      // 一元或二元操作符问题
+        "reportOptionalMemberAccess": "warning",    // 访问可能为None的变量
+        "reportArgumentType": "warning",    //  函数参数不兼容诊断, 也就是将 Enigine|None 赋值给 Engine 时是否诊断
+        "reportAttributeAccessIssue": "error",        // 属性访问问题, 比如访问不存在属性, 给属性赋值错误类型值
+        "reportOptionalSubscript": "warning",   // 对可能为None的变量进行索引
+        "reportRedeclaration": "warning",      // 变量重复声明
+        "reportReturnType": "warning",      // 函数返回值类型不兼容  (返回None时是否需要给返回注解添加 |None)
+        "reportIndexIssue": "error",      // 索引相关问题
+        "reportAssignmentType": "error",      // 变量类型不兼容
+        "reportInvalidTypeArguments": "error",      // 类型参数不兼容
+    },
+    
+    "python.testing.pytestArgs": [
+        "."
+    ],
+    "python.testing.unittestEnabled": false,
+    "python.testing.pytestEnabled": true,
+    "[python]": {
+        "editor.codeActionsOnSave": {
+            "source.organizeImports": "never"
+        },
+        "editor.formatOnSave": true,
+        "editor.formatOnType": true,
+        "editor.defaultFormatter": "ms-python.black-formatter",
+
+        "python.formatting.provider": "none"
+    },
+    "black-formatter.args": [
+        "--config=black.toml",
+        "--target-version=py312",
+        "--skip-string-normalization",
+        "--line-length",
+        "120"
+    ],
+    "files.associations": {
+        "*Dockerfile*": "dockerfile",
+    },
+    "python.testing.unittestArgs": [
+        "-v",
+        "-s",
+        ".",
+        "-p",
+        "*test.py"
+    ],
+
+}
