@@ -9,6 +9,7 @@ class Room:
         self.room_name = room_name
         self.public = False
         self.users: list[User] = []
+        self.room_owner: User | None = None
         self.play_list: list[Video] = []
 
     def to_dict(self) -> dict[str, Any]:
@@ -26,6 +27,10 @@ class Room:
     def remove_user(self, user: User):
         user.leave_room()
         self.users.remove(user)
+        if self.room_owner and self.room_owner.user_id == user.user_id:
+            self.room_owner = None
+        if len(self.users) > 0:
+            self.room_owner = self.users[0]
 
     def add_video(self, video: Video):
         self.play_list.append(video)

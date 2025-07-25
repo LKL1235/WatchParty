@@ -148,3 +148,6 @@ config/local.py
 config/production.py
 .env.local
 .env.production 
+
+# test data
+example_data/

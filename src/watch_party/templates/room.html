@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频房间 - Watch Party</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/room.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-video"></i>
+                <span>Watch Party</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link">
+                        <i class="fas fa-home"></i>
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/room" class="nav-link active">
+                        <i class="fas fa-play"></i>
+                        房间
+                    </a>
+                </li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- 主要内容区域 -->
+    <main class="room-container">
+        <!-- 视频播放器区域 -->
+        <div class="video-section">
+            <div class="video-player-container">
+                <!-- 视频标题栏 -->
+                <div class="video-title-bar">
+                    <h2 class="video-title">选择一个视频开始观看</h2>
+                </div>
+                
+                <!-- 视频播放器 -->
+                <div class="video-player">
+                    <video id="videoElement" class="video-element">
+                        <source src="" type="video/mp4">
+                        您的浏览器不支持视频播放。
+                    </video>
+                    
+                    <!-- 字幕显示区域 -->
+                    <div class="subtitle-container" id="subtitleContainer"></div>
+                    
+                    <!-- 视频控制栏 -->
+                    <div class="video-controls" id="videoControls">
+                        <div class="controls-overlay">
+                            <!-- 播放进度条 -->
+                            <div class="progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-filled" id="progressFilled"></div>
+                                    <div class="progress-handle" id="progressHandle"></div>
+                                </div>
+                            </div>
+                            
+                            <!-- 控制按钮区域 -->
+                            <div class="controls-bottom">
+                                <div class="controls-left">
+                                    <!-- 播放/暂停按钮 -->
+                                    <button class="control-btn play-pause-btn" id="playPauseBtn">
+                                        <i class="fas fa-play"></i>
+                                    </button>
+                                    
+                                    <!-- 音量控制 -->
+                                    <div class="volume-control">
+                                        <button class="control-btn volume-btn" id="volumeBtn">
+                                            <i class="fas fa-volume-up"></i>
+                                        </button>
+                                        <div class="volume-slider-container">
+                                            <input type="range" class="volume-slider" id="volumeSlider" min="0" max="100" value="100">
+                                        </div>
+                                    </div>
+                                    
+                                    <!-- 时间显示 -->
+                                    <div class="time-display">
+                                        <span id="currentTime">00:00</span>
+                                        <span>/</span>
+                                        <span id="duration">00:00</span>
+                                    </div>
+                                </div>
+                                
+                                <div class="controls-right">
+                                    <!-- 设置按钮 -->
+                                    <button class="control-btn settings-btn" id="settingsBtn">
+                                        <i class="fas fa-cog"></i>
+                                    </button>
+                                    
+                                    <!-- 全屏按钮 -->
+                                    <button class="control-btn fullscreen-btn" id="fullscreenBtn">
+                                        <i class="fas fa-expand"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 播放列表区域 -->
+        <div class="playlist-section">
+            <div class="playlist-container">
+                <div class="playlist-header">
+                    <h3>播放列表</h3>
+                    <button class="btn btn-primary add-video-btn" id="addVideoBtn">
+                        <i class="fas fa-plus"></i>
+                        添加视频
+                    </button>
+                </div>
+                
+                <div class="playlist-content">
+                    <div class="playlist-empty" id="playlistEmpty">
+                        <i class="fas fa-list"></i>
+                        <p>播放列表为空</p>
+                        <p>点击"添加视频"按钮来添加视频</p>
+                    </div>
+                    
+                    <div class="playlist-items" id="playlistItems">
+                        <!-- 播放列表项将通过JavaScript动态添加 -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- 添加视频悬浮窗口 -->
+    <div class="modal-overlay" id="addVideoModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>添加视频到播放列表</h3>
+                <button class="modal-close" id="modalCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="form-group">
+                    <label for="videoSelect">选择视频：</label>
+                    <select id="videoSelect" class="form-control">
+                        <option value="">请选择视频文件</option>
+                    </select>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subtitleSelect">选择字幕（可选）：</label>
+                    <select id="subtitleSelect" class="form-control">
+                        <option value="">无字幕</option>
+                    </select>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="modalCancelBtn">取消</button>
+                <button class="btn btn-primary" id="modalConfirmBtn">确认添加</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 字幕设置悬浮窗口 -->
+    <div class="modal-overlay" id="subtitleSettingsModal">
+        <div class="modal-container">
+            <div class="modal-header">
+                <h3>字幕设置</h3>
+                <button class="modal-close" id="subtitleSettingsCloseBtn">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            
+            <div class="modal-content">
+                <div class="form-group">
+                    <label for="subtitleSize">字幕大小：</label>
+                    <input type="range" id="subtitleSize" class="form-control" min="12" max="36" value="18">
+                    <span class="range-value" id="subtitleSizeValue">18px</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subtitleColor">字幕颜色：</label>
+                    <input type="color" id="subtitleColor" class="form-control" value="#ffffff">
+                </div>
+                
+                <div class="form-group">
+                    <label for="subtitleOpacity">字幕透明度：</label>
+                    <input type="range" id="subtitleOpacity" class="form-control" min="0" max="100" value="100">
+                    <span class="range-value" id="subtitleOpacityValue">100%</span>
+                </div>
+                
+                <div class="form-group">
+                    <label for="subtitleBackground">背景透明度：</label>
+                    <input type="range" id="subtitleBackground" class="form-control" min="0" max="100" value="50">
+                    <span class="range-value" id="subtitleBackgroundValue">50%</span>
+                </div>
+            </div>
+            
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="subtitleSettingsCancelBtn">取消</button>
+                <button class="btn btn-primary" id="subtitleSettingsConfirmBtn">确认</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/room.js') }}"></script>
+</body>
+</html> 

@@ -1,95 +1,194 @@
-{% extends "base.html" %}
-
-{% block title %}首页 - Flask 应用{% endblock %}
-
-{% block content %}
-<div class="row">
-    <div class="col-md-8 mx-auto">
-        <div class="jumbotron bg-light p-5 rounded">
-            <h1 class="display-4">欢迎使用 Flask 应用！</h1>
-            <p class="lead">这是一个基础的Flask项目模板，包含了常用的功能和现代化的界面设计。</p>
-            <hr class="my-4">
-            <p>您可以在这里开始构建您的Web应用程序。</p>
-            <a class="btn btn-primary btn-lg" href="#" role="button" onclick="testApi()">测试 API</a>
-        </div>
-    </div>
-</div>
-
-<div class="row mt-4">
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">功能特性</h5>
-                <p class="card-text">
-                <ul>
-                    <li>响应式设计</li>
-                    <li>RESTful API</li>
-                    <li>错误处理</li>
-                    <li>静态文件服务</li>
-                </ul>
-                </p>
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频观看聚会 - 主页</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+</head>
+<body>
+    <!-- 导航栏 -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-logo">
+                <i class="fas fa-video"></i>
+                <span>Watch Party</span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item">
+                    <a href="/" class="nav-link active">
+                        <i class="fas fa-home"></i>
+                        主页
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="/player" class="nav-link">
+                        <i class="fas fa-play"></i>
+                        播放器
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#rooms" class="nav-link">
+                        <i class="fas fa-users"></i>
+                        房间
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">
+                        <i class="fas fa-info"></i>
+                        关于
+                    </a>
+                </li>
+            </ul>
+            <div class="nav-toggle" id="mobile-menu">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
             </div>
         </div>
-    </div>
+    </nav>
 
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">技术栈</h5>
-                <p class="card-text">
-                <ul>
-                    <li>Flask 2.3+</li>
-                    <li>Bootstrap 5</li>
-                    <li>Jinja2 模板</li>
-                    <li>Flask-CORS</li>
-                </ul>
+    <!-- 主要内容区域 -->
+    <main class="main-content">
+        <!-- 欢迎区域 -->
+        <section class="hero-section">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <i class="fas fa-video"></i>
+                    欢迎来到视频观看聚会
+                </h1>
+                <p class="hero-description">
+                    与朋友一起享受精彩的视频观看体验，同步播放，实时互动
                 </p>
+                <div class="hero-buttons">
+                    <a href="/player" class="btn btn-primary">
+                        <i class="fas fa-play"></i>
+                        开始观看
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <i class="fas fa-info-circle"></i>
+                        了解更多
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- 功能介绍 -->
+        <section class="features-section" id="features">
+            <div class="container">
+                <h2 class="section-title">主要功能</h2>
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-video"></i>
+                        </div>
+                        <h3>多格式支持</h3>
+                        <p>支持MP4、AVI、MKV等多种视频格式，让您的观看更自由</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-closed-captioning"></i>
+                        </div>
+                        <h3>字幕支持</h3>
+                        <p>支持SRT、VTT等字幕格式，多语言字幕随时切换</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-users"></i>
+                        </div>
+                        <h3>多人同步</h3>
+                        <p>与朋友实时同步观看，共享精彩时刻</p>
+                    </div>
+                    <div class="feature-card">
+                        <div class="feature-icon">
+                            <i class="fas fa-mobile-alt"></i>
+                        </div>
+                        <h3>响应式设计</h3>
+                        <p>适配各种设备屏幕，随时随地享受观看体验</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 快速入门 -->
+        <section class="quick-start-section">
+            <div class="container">
+                <h2 class="section-title">快速开始</h2>
+                <div class="steps-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h3>选择视频</h3>
+                            <p>前往播放页面，从服务器上选择您想要观看的视频</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h3>配置字幕</h3>
+                            <p>选择合适的字幕文件，享受无障碍观看体验</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h3>开始观看</h3>
+                            <p>点击播放按钮，开始您的精彩观影之旅</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 房间列表 -->
+        <section class="rooms-section" id="rooms">
+            <div class="container">
+                <h2 class="section-title">可用房间</h2>
+                <div class="rooms-container" id="rooms-list">
+                    <div class="loading">
+                        <i class="fas fa-spinner fa-spin"></i>
+                        正在加载房间列表...
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- 页脚 -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <h3>
+                        <i class="fas fa-video"></i>
+                        Watch Party
+                    </h3>
+                    <p>在线视频观看聚会平台</p>
+                </div>
+                <div class="footer-section">
+                    <h3>功能</h3>
+                    <ul>
+                        <li><a href="/player">视频播放</a></li>
+                        <li><a href="#rooms">房间管理</a></li>
+                        <li><a href="#features">字幕支持</a></li>
+                    </ul>
+                </div>
+                <div class="footer-section">
+                    <h3>关于</h3>
+                    <ul>
+                        <li><a href="#about">项目介绍</a></li>
+                        <li><a href="https://github.com">GitHub</a></li>
+                        <li><a href="#contact">联系我们</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2024 Watch Party. 保留所有权利。</p>
             </div>
         </div>
-    </div>
+    </footer>
 
-    <div class="col-md-4">
-        <div class="card">
-            <div class="card-body">
-                <h5 class="card-title">快速开始</h5>
-                <p class="card-text">
-                <ol>
-                    <li>安装依赖</li>
-                    <li>运行应用</li>
-                    <li>访问 localhost:5000</li>
-                    <li>开始开发</li>
-                </ol>
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- API测试结果显示区域 -->
-<div id="api-result" class="mt-4" style="display: none;">
-    <div class="alert alert-info">
-        <h6>API 响应：</h6>
-        <pre id="api-response"></pre>
-    </div>
-</div>
-{% endblock %}
-
-{% block scripts %}
-<script>
-    async function testApi() {
-        try {
-            const response = await fetch('/api/hello');
-            const data = await response.json();
-
-            document.getElementById('api-response').textContent = JSON.stringify(data, null, 2);
-            document.getElementById('api-result').style.display = 'block';
-
-            // 滚动到结果区域
-            document.getElementById('api-result').scrollIntoView({ behavior: 'smooth' });
-        } catch (error) {
-            document.getElementById('api-response').textContent = '错误: ' + error.message;
-            document.getElementById('api-result').style.display = 'block';
-        }
-    }
-</script>
-{% endblock %}
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html> 

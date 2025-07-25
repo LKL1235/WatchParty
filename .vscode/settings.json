@@ -53,5 +53,27 @@
         "-p",
         "*test.py"
     ],
+    "cursorpyright.analysis.diagnosticSeverityOverrides": {
+        "reportGeneralTypeIssues": "warning",
+        "reportMissingImports": "warning",
+        "reportCallIssue": "warning",
+        "reportOptionalIterable": "warning",
+        "reportOptionalContextManager": "warning",
+        "reportOperatorIssue": "warning",
+        "reportOptionalMemberAccess": "warning",
+        "reportArgumentType": "warning",
+        "reportAttributeAccessIssue": "error",
+        "reportOptionalSubscript": "warning",
+        "reportRedeclaration": "warning",
+        "reportReturnType": "warning",
+        "reportIndexIssue": "error",
+        "reportAssignmentType": "error",
+        "reportInvalidTypeArguments": "error"
+    },
+    "cursorpyright.analysis.extraPaths": [
+        "./src"
+    ],
+    "cursorpyright.analysis.typeCheckingMode": "strict",
+    "python.languageServer": "None",
 
 }

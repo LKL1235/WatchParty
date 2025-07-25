@@ -1,4 +1,5 @@
 serverConfig:
   port: 5999
   log_path: "logs"
-  data_path: "data"
+dataConfig:
+  data_path: "I:\\demo\\video_python\\example_data"

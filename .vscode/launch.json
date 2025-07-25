@@ -12,5 +12,13 @@
             "console": "integratedTerminal",
             "args": ["--config", "bin/config/config.yaml"]
         },
+        {
+            "name": "watch_party_entrypoint",
+            "type": "debugpy",
+            "request": "launch",
+            "program": "${workspaceFolder}/src/watch_party/cmd/run.py",
+            "console": "integratedTerminal",
+            "args": ["--config", "bin/config/config.yaml"]
+        },
     ]
 }
